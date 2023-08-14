@@ -55,6 +55,6 @@ export class WebSocketConnection extends EventEmitter {
       len === 126 ? data.readUInt16BE(2) : data.readUInt32BE(2)
     );
 
-    console.log({ firstByte, opcode: (entry || [])[0] ?? 'invalid' });
+    console.log({ firstByte, opcode: entry ?? 'invalid' });
   }
 }

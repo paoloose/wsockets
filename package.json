@@ -2,16 +2,16 @@
   "name": "wsockets",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "./build/main.js",
   "engines": {
     "node": "18.17.0"
   },
   "scripts": {
     "build": "tsc",
     "start": "node ./build/main.js",
-    "dev": "tsx --watch ./src/main.ts",
+    "dev": "tsx --watch ./lib/main.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint ./src/**/*.ts"
+    "lint": "eslint ./lib/**/*.ts"
   },
   "dependencies": {
     "http-status": "1.6.2"
