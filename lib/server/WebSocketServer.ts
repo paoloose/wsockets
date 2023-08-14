@@ -5,8 +5,9 @@ import { Duplex } from 'node:stream';
 import {
   BAD_REQUEST, UPGRADE_REQUIRED, METHOD_NOT_ALLOWED, SERVICE_UNAVAILABLE,
 } from 'http-status';
-import { WebSocketConnection } from './websocket';
-import { OnUpgradeCallback } from './types';
+import { WebSocketConnection } from '../connection/WebSocketConnection';
+import { OnUpgradeCallback } from '../types';
+import { GUID } from '../constants';
 
 // References
 // <https://rafalgolarz.com/blog/2016/12/07/websocket_servers_101/>
@@ -30,8 +31,6 @@ const defaultOptions: WebSocketServerOptions = {
   noServer: false,
   server: null,
 } as const;
-
-const GUID = '258EAFA5-E914-47DA-95CA-C5AB0DC85B11';
 
 export class WebSocketServer extends EventEmitter {
   private server: http.Server | null;

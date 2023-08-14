@@ -1,4 +1,4 @@
-import { WebSocketServer } from './websocket-server';
+import { WebSocketServer } from './server/WebSocketServer';
 
 const WS_PORT = process.env.PORT ?? 4000;
 

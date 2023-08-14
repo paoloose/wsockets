@@ -1,3 +1,3 @@
-import { WebSocketConnection } from './websocket';
+import { WebSocketConnection } from './connection/WebSocketConnection';
 
 export type OnUpgradeCallback = (socket: WebSocketConnection) => void;
