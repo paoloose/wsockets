@@ -1,0 +1,32 @@
+{
+    "env": {
+        "browser": false,
+        "node": true,
+        "es6": true
+    },
+    "extends": [
+        "airbnb-base",
+        "airbnb-typescript/base"
+    ],
+    "parserOptions": {
+        "project": "./tsconfig.json"
+    },
+    "ignorePatterns": [
+        "build",
+        "node_modules"
+    ],
+    "rules": {
+        "no-console": "off",
+        // See https://eslint.org/docs/latest/rules/brace-style#stroustrup
+        "@typescript-eslint/brace-style": ["error", "stroustrup"],
+        "no-underscore-dangle": "off",
+        "no-plusplus": "off",
+        "import/prefer-default-export": "off",
+        "@typescript-eslint/no-unused-vars": [
+            "error", { "argsIgnorePattern": "^_", "args": "all" }
+        ],
+        "no-bitwise": "off",
+        "quote-props": ["error", "consistent-as-needed"],
+        "@typescript-eslint/lines-between-class-members": "off"
+    }
+}

@@ -1,0 +1,36 @@
+{
+  "name": "wsockets",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "engines": {
+    "node": "18.17.0"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node ./build/main.js",
+    "dev": "tsx --watch ./src/main.ts",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint ./src/**/*.ts"
+  },
+  "dependencies": {
+    "http-status": "1.6.2"
+  },
+  "devDependencies": {
+    "@types/node": "20.4.5",
+    "@typescript-eslint/eslint-plugin": "6.2.0",
+    "@typescript-eslint/parser": "6.2.0",
+    "eslint": "8.46.0",
+    "eslint-config-airbnb-base": "15.0.0",
+    "eslint-config-airbnb-typescript": "17.1.0",
+    "eslint-plugin-import": "2.28.0",
+    "tsx": "3.12.7",
+    "typescript": "5.1.6"
+  },
+  "keywords": [
+    "websockets",
+    "rfc-6455"
+  ],
+  "author": "@paoloose",
+  "license": "Unlicense"
+}
