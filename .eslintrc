@@ -27,6 +27,7 @@
         ],
         "no-bitwise": "off",
         "quote-props": ["error", "consistent-as-needed"],
-        "@typescript-eslint/lines-between-class-members": "off"
+        "@typescript-eslint/lines-between-class-members": "off",
+        "no-nested-ternary": "off"
     }
 }
