@@ -1,7 +1,9 @@
 import EventEmitter from 'events';
 import { Duplex } from 'stream';
-import { FrameNotMaskedException } from '../exceptions';
-import { OPCODES } from '../constants';
+// import { FrameNotMaskedException } from '../exceptions';
+// import { OPCODES } from '../constants';
+import { DataReceiver } from './DataReceiver';
+import { DataSender } from './DataSender';
 
 export enum WsConnectionState {
   CONNECTING,
@@ -14,6 +16,8 @@ export class WebSocketConnection extends EventEmitter {
   socket!: Duplex;
   state!: WsConnectionState;
   paused!: boolean;
+  receiver!: DataReceiver;
+  sender!: DataSender;
 
   constructor({ socket }: { socket: Duplex }) {
     super();
@@ -21,46 +25,34 @@ export class WebSocketConnection extends EventEmitter {
     this.state = WsConnectionState.CONNECTING;
     this.paused = false;
 
-    socket.on('data', (data: Buffer) => {
-      console.log(`receiving data: ${data.toString('hex')}`);
-      this.parseFrame(data);
+    this.init();
+  }
+
+  init() {
+    this.sender = new DataSender();
+    this.receiver = new DataReceiver();
+
+    // listen for events in the receiver
+    // this.receiver.on('conclude', () => {});
+    // this.receiver.on('drain', () => {});
+    // this.receiver.on('error', () => {});
+    // this.receiver.on('message', () => {});
+    // this.receiver.on('ping', () => {});
+    // this.receiver.on('pong', () => {});
+
+    // listen for e vents in the socket itself
+    // this.socket.on('close', () => {});
+    // this.socket.on('data', () => {});
+    // this.socket.on('end', () => {});
+    // this.socket.on('error', () => {});
+
+    this.socket.on('data', (data: Buffer) => {
+      this.receiver.write(data);
     });
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  parseFrame(data: Buffer) {
-    // Process first byte
-    // 0:[FIN] 1..3:[reserved] 4..7:[opcode]
-    const firstByte = data.readUint8(0);
-    const opcode = firstByte & 0b00001111;
-    const fin = (firstByte & 0b10000000) >> 7;
-    console.log({ firstByte, fin, opcode });
-
-    const validOpcode = Object.values(OPCODES).some((value) => value === opcode);
-    if (!validOpcode) {
-      throw new Error(`Invalid opcode: ${opcode}`);
-    }
-    if (opcode === OPCODES.close) {
-      this.state = WsConnectionState.CLOSING;
-      this.socket.end();
-      return;
-    }
-
-    // Process second byte
-    // 0:[MASK] 1..7:[Payload len]
-    const secondByte = data.readUint8(1);
-    const masked = (secondByte & 0b10000000) >> 7;
-    if (!masked) {
-      throw new FrameNotMaskedException();
-    }
-    const maskingKey = data.readUint32BE(2);
-
-    const len = secondByte & 0b01111111;
-    // NOTE: should the len be a bigint to be compliant with
-    //       <https://www.rfc-editor.org/rfc/rfc6455#page-29>?
-    const effectiveLen = len <= 125 ? len : (
-      len === 126 ? data.readUint16BE(2) : data.readUint32BE(2)
-    );
+  send(data: Buffer | string) {
+    this.sender.send(data);
   }
 }
 

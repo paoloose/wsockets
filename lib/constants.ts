@@ -11,3 +11,5 @@ export const OPCODES = Object.freeze({
 });
 
 export const GUID = '258EAFA5-E914-47DA-95CA-C5AB0DC85B11';
+
+export const EMPTY_BUFFER = Buffer.alloc(0);
